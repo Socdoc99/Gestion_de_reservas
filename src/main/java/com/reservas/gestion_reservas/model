@@ -1,0 +1,32 @@
+package com.example.gestion_reservas_eventos.model;
+
+import lombok.Data;
+import javax.persistence.*;
+
+@Data
+@Entity
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    @Column(unique = true)
+    private String email;
+    private String password;
+}
+
+package com.example.gestion_reservas_eventos.model;
+
+import lombok.Data;
+import javax.persistence.*;
+
+@Data
+@Entity
+public class Espacio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nombre;
+    private String descripcion;
+    private int capacidad;
+}

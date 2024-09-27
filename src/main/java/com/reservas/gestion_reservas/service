@@ -1,0 +1,61 @@
+package com.example.gestion_reservas_eventos.service;
+
+import com.example.gestion_reservas_eventos.model.Usuario;
+import com.example.gestion_reservas_eventos.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UsuarioService {
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Usuario registrarUsuario(Usuario usuario) {
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+}
+
+package com.example.gestion_reservas_eventos.service;
+
+import com.example.gestion_reservas_eventos.model.Espacio;
+import com.example.gestion_reservas_eventos.repository.EspacioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class EspacioService {
+    @Autowired
+    private EspacioRepository espacioRepository;
+
+    public Espacio crearEspacio(Espacio espacio) {
+        return espacioRepository.save(espacio);
+    }
+
+    public List<Espacio> listarEspacios() {
+        return espacioRepository.findAll();
+    }
+
+    public Espacio actualizarEspacio(Long id, Espacio espacioActualizado) {
+        Espacio espacio = espacioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Espacio no encontrado"));
+        espacio.setNombre(espacioActualizado.getNombre());
+        espacio.setDescripcion(espacioActualizado.getDescripcion());
+        espacio.setCapacidad(espacioActualizado.getCapacidad());
+        return espacioRepository.save(espacio);
+    }
+
+    public void eliminarEspacio(Long id) {
+        espacioRepository.deleteById(id);
+    }
+}

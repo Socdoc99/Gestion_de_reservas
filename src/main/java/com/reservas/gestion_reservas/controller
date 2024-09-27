@@ -1,0 +1,63 @@
+package com.example.gestion_reservas_eventos.controller;
+
+import com.example.gestion_reservas_eventos.model.Usuario;
+import com.example.gestion_reservas_eventos.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/usuarios")
+public class UsuarioController {
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @PostMapping("/registro")
+    public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario usuario) {
+        return ResponseEntity.ok(usuarioService.registrarUsuario(usuario));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Usuario usuario) {
+        // Implementar lógica de login
+        return ResponseEntity.ok("Login exitoso");
+    }
+}
+
+package com.example.gestion_reservas_eventos.controller;
+
+import com.example.gestion_reservas_eventos.model.Espacio;
+import com.example.gestion_reservas_eventos.service.EspacioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/espacios")
+public class EspacioController {
+    @Autowired
+    private EspacioService espacioService;
+
+    @PostMapping
+    public ResponseEntity<Espacio> crearEspacio(@RequestBody Espacio espacio) {
+        return ResponseEntity.ok(espacioService.crearEspacio(espacio));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Espacio>> listarEspacios() {
+        return ResponseEntity.ok(espacioService.listarEspacios());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Espacio> actualizarEspacio(@PathVariable Long id, @RequestBody Espacio espacio) {
+        return ResponseEntity.ok(espacioService.actualizarEspacio(id, espacio));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarEspacio(@PathVariable Long id) {
+        espacioService.eliminarEspacio(id);
+        return ResponseEntity.ok().build();
+    }
+}

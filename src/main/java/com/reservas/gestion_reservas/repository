@@ -1,0 +1,16 @@
+package com.example.gestion_reservas_eventos.repository;
+
+import com.example.gestion_reservas_eventos.model.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario findByEmail(String email);
+}
+
+package com.example.gestion_reservas_eventos.repository;
+
+import com.example.gestion_reservas_eventos.model.Espacio;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EspacioRepository extends JpaRepository<Espacio, Long> {
+}
